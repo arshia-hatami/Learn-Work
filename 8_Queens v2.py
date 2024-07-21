@@ -1,3 +1,6 @@
+import random
+
+
 def amniat(board, row, column):
     for i in range(column):  # برای برسی ستون ها
         if board[row][i] == 1:
@@ -15,7 +18,9 @@ def amniat(board, row, column):
 def solve(board, column):
     if column >= len(board):
         return True
-    for i in range(len(board)):
+    rows = list(range(len(board)))
+    random.shuffle(rows)
+    for i in rows:
         if amniat(board, i, column):
             board[i][column] = 1
             if solve(board, column + 1):
@@ -25,19 +30,20 @@ def solve(board, column):
     return False
 
 
-def printer(board):
-    for row in board:
-        print(" ".join("V" if x == 1 else "-" for x in row))
+while True:
+    def printer(board):
+        for row in board:
+            print(" ".join("V" if x == 1 else "-" for x in row))
 
 
-def group():
-    n = int(input("pls enter the number of queens: "))
-    board = [[0] * n for _ in range(n)]
+    def group():
+        n = int(input("pls enter the number of queens: "))
+        board = [[0] * n for _ in range(n)]
 
-    if solve(board, 0):
-        printer(board)
-    else:
-        print("No solution")
+        if solve(board, 0):
+            printer(board)
+        else:
+            print("No solution")
 
+    group()
 
-group()
